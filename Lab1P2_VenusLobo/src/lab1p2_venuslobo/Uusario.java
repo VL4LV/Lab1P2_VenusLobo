@@ -4,6 +4,8 @@
  */
 package lab1p2_venuslobo;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -23,7 +25,8 @@ class Uusario {
     public Uusario(String nombre, String apellido, Date fechaNacimiento, String correo, String contrasena) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.fechaNacimiento = fechaNacimiento;
+        this.fechaNacimiento = fechaNacimiento;  
+
         this.correo = correo;
         this.contrasena = contrasena;
     }
@@ -71,7 +74,7 @@ class Uusario {
 
     @Override
     public String toString() {
-        return "Usuario{" + "Nombre=" + nombre +", Apellido=" + apellido + ", Fecha de nacimiento=" + fechaNacimiento + ", Correo=" + correo + ", Contrasena=" + contrasena + '}';
+        return "Usuario{" + "Nombre= " + nombre +", Apellido= " + apellido + ", Correo= " + correo + ", Contrasena= " + contrasena + ", fecha de nacimiento= ";
     }
 
     

@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -44,18 +46,31 @@ public class Lab1P2_VenusLobo {
                     String apellido = entrada.nextLine();
 
                     //FECHA DE NACIMIENTO
-                    System.out.print("Ingrese su fecha de nacimiento: ");
+                    System.out.print("Ingrese su fecha de nacimiento (yyyy/MM/dd): ");
                     String fechaNacimiento = entrada.nextLine();
                     DateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
                     Date fecha = formatoFecha.parse(fechaNacimiento);
+                    
+                    
+                    Date newFecha = new Date();
+                    System.out.println(newFecha);
 
                     //Validar la fecha de nacimiento 
+                    int resta = (int)newFecha.getYear() - (int)fecha.getYear();
+                    System.out.println("resta: " + resta);
+                  
+                    
                     //CORREO
                     System.out.print("Ingrese correo electronico: ");
                     String correo = entrada.nextLine();
+                    if ( correoValido (correo)) {
+                        
+                    } else{
+                        System.out.println("El correo solo puede contener “-“, “_”, “&”, “$” y “%”");
+                    }
 
                     //CONTRASENA 
-                    System.out.print("Ingrese una contraseñaÑ ");
+                    System.out.print("Ingrese una contraseña: ");
                     String contrasena = entrada.nextLine();
 
                     //Agregar al array list la informacion 
@@ -66,7 +81,8 @@ public class Lab1P2_VenusLobo {
                 case 2:
                     for (int i = 0; i < usuario.size(); i++) {
                         Uusario mascota = usuario.get(i);
-                        System.out.println(mascota);
+                        System.out.print(mascota);
+                        imprimirFecha(mascota.getFechaNacimiento());
                     }
 
                     break;
@@ -82,5 +98,16 @@ public class Lab1P2_VenusLobo {
 
         }
     }
+
+    public static boolean correoValido (String correo) {
+        String regex = "^[a-zA-Z0-9._%&$+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(correo);
+        return matcher.matches();
+    }
+    
+    public static void imprimirFecha (Date fecha){
+        System.out.println((fecha.getYear()+1900)+"/"+(fecha.getMonth() + 1)+"/"+fecha.getDate()+"}");
+    } 
 
 }
