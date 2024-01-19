@@ -72,6 +72,11 @@ public class Lab1P2_VenusLobo {
                     //CONTRASENA 
                     System.out.print("Ingrese una contraseña: ");
                     String contrasena = entrada.nextLine();
+                    if(contrasenaValida(contrasena)){
+                        
+                    } else {
+                        System.out.println("La contraseña solo puede contener (“!“, “?”,“<”, “>”, “$” y “%”).");
+                    }
 
                     //Agregar al array list la informacion 
                     Uusario usu = new Uusario(nombre, apellido, fecha, correo, contrasena);
@@ -110,4 +115,10 @@ public class Lab1P2_VenusLobo {
         System.out.println((fecha.getYear()+1900)+"/"+(fecha.getMonth() + 1)+"/"+fecha.getDate()+"}");
     } 
 
+    public static boolean contrasenaValida(String contrasena) {
+    String regex = "^[a-zA-Z0-9._%!&$+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+    Pattern pattern = Pattern.compile(regex);
+    Matcher matcher = pattern.matcher(contrasena);
+    return matcher.matches();
+}
 }
