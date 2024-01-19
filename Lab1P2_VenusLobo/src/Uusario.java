@@ -1,4 +1,5 @@
 
+import java.util.Calendar;
 import java.util.Date;
 
 /*
@@ -14,18 +15,20 @@ public class Uusario {
     //Atributos 
     String nombre; 
     String apellido; 
-    Date fechaNacimiento; 
+    String fechaNacimiento; 
     String correo; 
     String contrasena; 
-    
-    //Constructor 
-    public Uusario(String nombre, String apellido, Date fechaNacimiento, String correo, String contrasena) {
+
+    //Constructor
+    public Uusario(String nombre, String apellido, Calendar fechaNacimiento, String correo, String contrasena) {
         this.nombre = nombre;
         this.apellido = apellido;
-        this.fechaNacimiento = fechaNacimiento;
+        
         this.correo = correo;
         this.contrasena = contrasena;
     }
+    
+     
     
     
     
