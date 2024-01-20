@@ -72,10 +72,5 @@ class Uusario {
         this.contrasena = contrasena;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" + "Nombre= " + nombre +", Apellido= " + apellido + ", Correo= " + correo + ", Contrasena= " + contrasena + ", fecha de nacimiento= ";
-    }
-
     
 }

@@ -26,6 +26,7 @@ public class Lab1P2_VenusLobo {
         int opc = 0;
 
         while (opc != 4) {
+            System.out.println();
             System.out.println("---REGISTRO DE USUARIOS---");
             System.out.println("1. Registrar usuario");
             System.out.println("2. Listar todo");
@@ -70,18 +71,18 @@ public class Lab1P2_VenusLobo {
                             correo = entrada.nextLine();
 
                             if (!correoValido(correo)) {
-                                System.out.println("El correo solo puede contener “-“, “_”, “&”, “$” y “%”");
+                                System.out.println("El correo solo puede ser de los dominios permitidos y contener “-“, “_”, “&”, “$” y “%”.");
                             }
 
                         } while (!correoValido(correo));
 
-                        //CONTRASENA 
+                        // Contraseña
                         do {
                             System.out.print("Ingrese una contraseña: ");
                             contrasena = entrada.nextLine();
 
                             if (!contrasenaValida(contrasena)) {
-                                System.out.println("La contraseña solo puede contener (“!“, “?”,“<”, “>”, “$” y “%”).");
+                                System.out.println("La contraseña solo puede contener una letra mayúscula, una letra minúscula, un número y un símbolo (“!“, “?”,“<”, “>”, “$” y “%”).");
                             }
 
                         } while (!contrasenaValida(contrasena));
@@ -93,14 +94,62 @@ public class Lab1P2_VenusLobo {
                     break;
 
                 case 2:
+                    System.out.println("---LISTADO COMPLETO DE USUARIOS---");
                     for (int i = 0; i < usuario.size(); i++) {
-                        Uusario mascota = usuario.get(i);
-                        System.out.print(mascota);
-                        imprimirFecha(mascota.getFechaNacimiento());
+                        Uusario usuarioActual = usuario.get(i);
+
+                        System.out.println("Nombre: " + usuarioActual.getNombre());
+                        System.out.println("Apellido: " + usuarioActual.getApellido());
+
+                        Date newFech = new Date();
+                        int edadEnMilisegundos = (int) (newFech.getTime() - usuarioActual.getFechaNacimiento().getTime());
+                        int edadEnSegundos = edadEnMilisegundos / 1000;
+                        int edadEnDias = (int) (edadEnSegundos / (24 * 3600));
+                        int edadEnAnos = edadEnDias / 365;
+                        int diasRestantes = edadEnDias % 365;
+
+                        int meses = diasRestantes / 30;
+                        int dias = diasRestantes % 30;
+
+                        //edad exacta
+                        System.out.println("Edad: " + edadEnAnos + " años, " + meses + " meses, " + dias + " días");
+                        System.out.println("Correo Electrónico: " + usuarioActual.getCorreo());
+                        System.out.println("Contraseña: " + usuarioActual.getContrasena());
+                        System.out.println("--------------------------");
                     }
                     break;
 
                 case 3:
+                    String dominiosPermitidos = "gmail.com,outlook.com,yahoo.com,icloud.com,protonmail.com,fastmail.com";
+
+                    String[] dominiosArray = dominiosPermitidos.split(",");
+
+                    //Copiar la misma logica del 2 
+                    System.out.println("---LISTADO DE USUARIOS ORDENADO POR DOMINIO---");
+                    for (String dominio : dominiosArray) {
+                        for (Uusario usuarioActual : usuario) {
+                            String correo = usuarioActual.getCorreo().toLowerCase();
+                            if (correo.contains("@" + dominio)) {
+                                System.out.println("Nombre: " + usuarioActual.getNombre());
+                                System.out.println("Apellido: " + usuarioActual.getApellido());
+
+                                Date newFech = new Date();
+                                int edadEnMilisegundos = (int) (newFech.getTime() - usuarioActual.getFechaNacimiento().getTime());
+                                int edadEnSegundos = edadEnMilisegundos / 1000;
+                                int edadEnDias = (int) (edadEnSegundos / (24 * 3600));
+                                int edadEnAnos = edadEnDias / 365;
+                                int diasRestantes = edadEnDias % 365;
+
+                                int meses = diasRestantes / 30;
+                                int dias = diasRestantes % 30;
+
+                                System.out.println("Edad: " + edadEnAnos + " años, " + meses + " meses, " + dias + " días");
+                                System.out.println("Correo Electrónico: " + usuarioActual.getCorreo());
+                                System.out.println("Contraseña: " + usuarioActual.getContrasena());
+                                System.out.println("--------------------------");
+                            }
+                        }
+                    }
                     break;
 
                 case 4:
@@ -117,7 +166,25 @@ public class Lab1P2_VenusLobo {
         String regex = "^[a-zA-Z0-9._%&$+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(correo);
-        return matcher.matches();
+
+        // Validar dominios 
+        if (matcher.matches()) {
+            String dominiosPermitidos = "gmail.com,outlook.com,yahoo.com,icloud.com,protonmail.com,fastmail.com";
+            String[] dominiosArray = dominiosPermitidos.split(",");
+
+            String[] partesCorreo = correo.split("@");
+            if (partesCorreo.length == 2) {
+                String dominio = partesCorreo[1].toLowerCase();
+
+                for (String dominioPermitido : dominiosArray) {
+                    if (dominio.equals(dominioPermitido)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
     public static void imprimirFecha(Date fecha) {
