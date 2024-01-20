@@ -30,6 +30,7 @@ public class Lab1P2_VenusLobo {
             System.out.println("1. Registrar usuario");
             System.out.println("2. Listar todo");
             System.out.println("3. Listar por dominio");
+            System.out.println("4. Salir del programa");
             System.out.print("Que desea realizar: ");
             opc = entrada.nextInt();
 
@@ -55,32 +56,40 @@ public class Lab1P2_VenusLobo {
 
                     //Validar la fecha de nacimiento 
                     int resta = (int) newFecha.getYear() - (int) fecha.getYear();
+
                     if (resta < 12) {
                         System.out.println("Usted no tiene la edad adecuada.");
                     } else {
 
-                        //CORREO
-                        System.out.print("Ingrese correo electronico: ");
-                        String correo = entrada.nextLine();
-                        if (correoValido(correo)) {
+                        String correo;
+                        String contrasena;
 
-                        } else {
-                            System.out.println("El correo solo puede contener “-“, “_”, “&”, “$” y “%”");
-                        }
+                        //CORREO
+                        do {
+                            System.out.print("Ingrese correo electrónico: ");
+                            correo = entrada.nextLine();
+
+                            if (!correoValido(correo)) {
+                                System.out.println("El correo solo puede contener “-“, “_”, “&”, “$” y “%”");
+                            }
+
+                        } while (!correoValido(correo));
 
                         //CONTRASENA 
-                        System.out.print("Ingrese una contraseña: ");
-                        String contrasena = entrada.nextLine();
-                        if (contrasenaValida(contrasena)) {
+                        do {
+                            System.out.print("Ingrese una contraseña: ");
+                            contrasena = entrada.nextLine();
 
-                        } else {
-                            System.out.println("La contraseña solo puede contener (“!“, “?”,“<”, “>”, “$” y “%”).");
-                        }
+                            if (!contrasenaValida(contrasena)) {
+                                System.out.println("La contraseña solo puede contener (“!“, “?”,“<”, “>”, “$” y “%”).");
+                            }
+
+                        } while (!contrasenaValida(contrasena));
+
                         //Agregar al array list la informacion 
-                    Uusario usu = new Uusario(nombre, apellido, fecha, correo, contrasena);
-                    usuario.add(usu);
+                        Uusario usu = new Uusario(nombre, apellido, fecha, correo, contrasena);
+                        usuario.add(usu);
                     }
-                    
                     break;
 
                 case 2:
@@ -89,8 +98,8 @@ public class Lab1P2_VenusLobo {
                         System.out.print(mascota);
                         imprimirFecha(mascota.getFechaNacimiento());
                     }
-
                     break;
+
                 case 3:
                     break;
 
@@ -116,7 +125,7 @@ public class Lab1P2_VenusLobo {
     }
 
     public static boolean contrasenaValida(String contrasena) {
-        String regex = "^[a-zA-Z0-9._%!&$+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!\\?<>$%])[A-Za-z\\d!\\?<>$%]{8,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(contrasena);
         return matcher.matches();
