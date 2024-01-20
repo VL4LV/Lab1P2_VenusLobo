@@ -50,37 +50,37 @@ public class Lab1P2_VenusLobo {
                     String fechaNacimiento = entrada.nextLine();
                     DateFormat formatoFecha = new SimpleDateFormat("yyyy/MM/dd");
                     Date fecha = formatoFecha.parse(fechaNacimiento);
-                    
-                    
+
                     Date newFecha = new Date();
-                    System.out.println(newFecha);
 
                     //Validar la fecha de nacimiento 
-                    int resta = (int)newFecha.getYear() - (int)fecha.getYear();
-                    System.out.println("resta: " + resta);
-                  
-                    
-                    //CORREO
-                    System.out.print("Ingrese correo electronico: ");
-                    String correo = entrada.nextLine();
-                    if ( correoValido (correo)) {
-                        
-                    } else{
-                        System.out.println("El correo solo puede contener “-“, “_”, “&”, “$” y “%”");
-                    }
-
-                    //CONTRASENA 
-                    System.out.print("Ingrese una contraseña: ");
-                    String contrasena = entrada.nextLine();
-                    if(contrasenaValida(contrasena)){
-                        
+                    int resta = (int) newFecha.getYear() - (int) fecha.getYear();
+                    if (resta < 12) {
+                        System.out.println("Usted no tiene la edad adecuada.");
                     } else {
-                        System.out.println("La contraseña solo puede contener (“!“, “?”,“<”, “>”, “$” y “%”).");
-                    }
 
-                    //Agregar al array list la informacion 
+                        //CORREO
+                        System.out.print("Ingrese correo electronico: ");
+                        String correo = entrada.nextLine();
+                        if (correoValido(correo)) {
+
+                        } else {
+                            System.out.println("El correo solo puede contener “-“, “_”, “&”, “$” y “%”");
+                        }
+
+                        //CONTRASENA 
+                        System.out.print("Ingrese una contraseña: ");
+                        String contrasena = entrada.nextLine();
+                        if (contrasenaValida(contrasena)) {
+
+                        } else {
+                            System.out.println("La contraseña solo puede contener (“!“, “?”,“<”, “>”, “$” y “%”).");
+                        }
+                        //Agregar al array list la informacion 
                     Uusario usu = new Uusario(nombre, apellido, fecha, correo, contrasena);
                     usuario.add(usu);
+                    }
+                    
                     break;
 
                 case 2:
@@ -104,21 +104,21 @@ public class Lab1P2_VenusLobo {
         }
     }
 
-    public static boolean correoValido (String correo) {
+    public static boolean correoValido(String correo) {
         String regex = "^[a-zA-Z0-9._%&$+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(correo);
         return matcher.matches();
     }
-    
-    public static void imprimirFecha (Date fecha){
-        System.out.println((fecha.getYear()+1900)+"/"+(fecha.getMonth() + 1)+"/"+fecha.getDate()+"}");
-    } 
+
+    public static void imprimirFecha(Date fecha) {
+        System.out.println((fecha.getYear() + 1900) + "/" + (fecha.getMonth() + 1) + "/" + fecha.getDate() + "}");
+    }
 
     public static boolean contrasenaValida(String contrasena) {
-    String regex = "^[a-zA-Z0-9._%!&$+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-    Pattern pattern = Pattern.compile(regex);
-    Matcher matcher = pattern.matcher(contrasena);
-    return matcher.matches();
-}
+        String regex = "^[a-zA-Z0-9._%!&$+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(contrasena);
+        return matcher.matches();
+    }
 }
